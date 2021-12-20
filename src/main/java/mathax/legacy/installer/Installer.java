@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.*;
@@ -41,6 +43,7 @@ public class Installer {
     JComboBox<String> clientVersionDropdown;
     JComboBox<String> gameVersionDropdown;
     JButton installDirectoryPicker;
+    JButton installHelpButton;
     JProgressBar progressBar;
 
     boolean finishedSuccessfulInstall = false;
@@ -162,9 +165,21 @@ public class Installer {
         installDirectoryPanel.add(installDirectoryPickerLabel);
         installDirectoryPanel.add(installDirectoryPicker);
 
+        JPanel installHelpPanel = new JPanel();
+
+        JLabel installHelpLabel = new JLabel("Installation Help:");
+        installHelpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        installHelpButton = new JButton("Help");
+        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation"));
+
+        installHelpPanel.add(installHelpLabel);
+        installHelpPanel.add(installHelpButton);
+
         topPanel.add(clientVersionPanel);
         topPanel.add(gameVersionPanel);
         topPanel.add(installDirectoryPanel);
+        topPanel.add(installHelpPanel);
 
         JPanel bottomPanel = new JPanel();
 
@@ -265,6 +280,7 @@ public class Installer {
                         clientVersionDropdown.setEnabled(true);
                         gameVersionDropdown.setEnabled(true);
                         installDirectoryPicker.setEnabled(true);
+                        installHelpButton.setEnabled(true);
                     } else {
                         button.setText("Installation failed!");
                         System.out.println("Failed to install to mods folder!");
@@ -363,6 +379,7 @@ public class Installer {
         clientVersionDropdown.setEnabled(enabled);
         gameVersionDropdown.setEnabled(enabled);
         installDirectoryPicker.setEnabled(enabled);
+        installHelpButton.setEnabled(enabled);
         button.setEnabled(enabled);
     }
 
@@ -371,5 +388,18 @@ public class Installer {
         button.setText("Install");
         progressBar.setValue(0);
         setInteractionEnabled(true);
+    }
+
+    public static void openUrl(String url) {
+        String os = System.getProperty("os.name").toLowerCase();
+
+        try {
+            if (os.contains("win")) {
+                if (Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) Desktop.getDesktop().browse(new URI(url));
+            } else if (os.contains("mac")) Runtime.getRuntime().exec("open " + url);
+            else if (os.contains("nix") || os.contains("nux")) Runtime.getRuntime().exec("xdg-open " + url);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
