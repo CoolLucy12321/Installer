@@ -92,7 +92,7 @@ public class Installer {
         JFrame frame = new JFrame("MatHax Legacy Installer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 6);
+        frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 6, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 4);
         frame.setLocationRelativeTo(null);
         frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathaxlegacy/textures/icons/icon.png"))).getImage());
 
