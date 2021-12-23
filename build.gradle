@@ -44,8 +44,6 @@ def bootstrapVersion = "0.2.0"
 def bootstrapArch = "i686"
 
 processResources {
-    inputs.property "version", project.installer_version
-
     filesMatching("metadata.json") {
         expand "version": project.installer_version
     }

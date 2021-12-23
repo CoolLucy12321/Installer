@@ -4,7 +4,7 @@ import mathax.legacy.json.JSONUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Version {
@@ -36,49 +36,23 @@ public class Version {
         return false;
     }
 
-    public static Version get() throws IOException {
-        InputStream is = Version.class.getResourceAsStream("/metadata.json");
-        Scanner s = new Scanner(is).useDelimiter("\\A");
+    public static Version get() {
+        Scanner s = new Scanner(Objects.requireNonNull(Version.class.getResourceAsStream("/metadata.json"))).useDelimiter("\\A");
+        return new Version(new JSONObject(s.hasNext() ? s.next() : "").getString("version"));
+    }
 
-        JSONObject json = new JSONObject(s.hasNext() ? s.next() : "");
-        return new Version(json.getString("version"));
+    public static Version getLatest() {
+        try {
+            return new Version(JSONUtils.readJsonFromUrl(Installer.API_URL + "metadata.json").getString("version"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
     public String toString() {
         return string;
-    }
-
-    public static class UpdateChecker {
-        public static String getLatest() {
-            String latestVer = null;
-            try {
-                JSONObject json = JSONUtils.readJsonFromUrl(Installer.API_URL + "metadata.json");
-                latestVer = json.getString("version");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (latestVer == null) return null;
-            return latestVer.replace("\n", "");
-        }
-
-        public static CheckStatus checkLatest() throws IOException {
-            String latestVersion = getLatest();
-
-            if (latestVersion == null) return CheckStatus.Cant_Check;
-            else {
-                Version latestVer = new Version(latestVersion);
-                Version currentVer = get();
-                if (latestVer.isHigherThan(currentVer)) return CheckStatus.Newer_Found;
-                else return CheckStatus.Latest;
-            }
-        }
-
-        public enum CheckStatus {
-            Cant_Check,
-            Newer_Found,
-            Latest
-        }
     }
 }
