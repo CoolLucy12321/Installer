@@ -29,8 +29,8 @@ import java.util.concurrent.ExecutionException;
 /*/-------------------------------------------------/*/
 
 public class Installer {
-    String API_URL = "https://api.mathaxclient.xyz/Installer/";
-    
+    public static String API_URL = "https://api.mathaxclient.xyz/Version/Legacy/Installer/";
+
     InstallerMeta INSTALLER_META;
     List<String> CLIENT_VERSIONS;
     List<String> GAME_VERSIONS;
@@ -95,6 +95,15 @@ public class Installer {
         frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 8, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 6);
         frame.setLocationRelativeTo(null);
         frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathaxlegacy/textures/icons/icon.png"))).getImage());
+
+        try {
+            if (Version.UpdateChecker.checkLatest() == Version.UpdateChecker.CheckStatus.Newer_Found) {
+                int result = JOptionPane.showOptionDialog(frame, "There is a new version of MatHax Legacy Installer, v" + Version.UpdateChecker.getLatest() + "! You are using v" + Version.get() + "!", "Newer MatHax Legacy Installer Found", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Cancel"}, "Yes");
+                if (result != JOptionPane.YES_OPTION) return;
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
 
         JPanel topPanel = new JPanel(new VerticalLayout());
 
@@ -171,7 +180,7 @@ public class Installer {
         installHelpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         installHelpButton = new JButton("Help");
-        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation"));
+        installHelpButton.addActionListener(e -> openUrl("https://mathaxclient.xyz/Installation/"));
 
         installHelpPanel.add(installHelpLabel);
         installHelpPanel.add(installHelpButton);
@@ -264,10 +273,10 @@ public class Installer {
                             for (File mod : modsFolderContents) {
                                 if (mod.getName().toLowerCase().contains("optifine") || mod.getName().toLowerCase().contains("optifabric")) {
                                     if (!shownOptifineDialog) {
-                                        int ofResult = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+                                        int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
                                         shownOptifineDialog = true;
-                                        if (ofResult != JOptionPane.YES_OPTION) {
+                                        if (result != JOptionPane.YES_OPTION) {
                                             cancelled = true;
                                             break;
                                         }
@@ -278,8 +287,8 @@ public class Installer {
                             }
 
                             if (failedToRemoveOptifine) {
-                                System.out.println("Failed to delete optifine from mods folder");
-                                JOptionPane.showMessageDialog(frame, "Failed to remove optifine from your mods folder, please make sure your game is closed and try again!", "Failed to remove optifine", JOptionPane.ERROR_MESSAGE);
+                                System.out.println("Failed to delete Optifine from mods folder");
+                                JOptionPane.showMessageDialog(frame, "Failed to remove Optifine from your mods folder, please make sure your game is closed and try again!", "Failed to remove Optifine", JOptionPane.ERROR_MESSAGE);
                                 cancelled = true;
                             }
                         }

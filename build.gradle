@@ -43,6 +43,14 @@ class FileOutput extends DefaultTask {
 def bootstrapVersion = "0.2.0"
 def bootstrapArch = "i686"
 
+processResources {
+    inputs.property "version", project.installer_version
+
+    filesMatching("metadata.json") {
+        expand "version": project.installer_version
+    }
+}
+
 jar {
     /*into 'mods', {
         from 'mods'
@@ -51,8 +59,6 @@ jar {
     manifest {
         attributes("Main-Class": application.mainClass)
     }
-
-    from "LICENSE"
 
     from (configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }) {
         exclude 'META-INF/*.SF'
@@ -75,7 +81,5 @@ tasks.withType(JavaCompile).configureEach {
     We'll use that if it's available, but otherwise we'll use the older option.
     */
     def targetVersion = 8
-    if (JavaVersion.current().isJava9Compatible()) {
-        it.options.release = targetVersion
-    }
+    if (JavaVersion.current().isJava9Compatible()) it.options.release = targetVersion
 }
