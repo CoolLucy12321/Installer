@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    Installer for MatHax Legacy, MatHax Legacy is a Minecraft 1.18 & 1.17.1 utility client for Fabric.
+    Installer for MatHax Legacy
 </p>
 
 <div align="center">
