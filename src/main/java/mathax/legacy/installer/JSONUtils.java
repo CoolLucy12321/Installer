@@ -1,4 +1,4 @@
-package mathax.legacy.json;
+package mathax.legacy.installer;
 
 import org.json.JSONObject;
 
@@ -15,11 +15,6 @@ public class JSONUtils {
         int codePoint;
         while ((codePoint = reader.read()) != -1) stringBuilder.append((char) codePoint);
         return stringBuilder.toString();
-    }
-
-    public static JSONObject readJsonFromString(String string) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new URL(string).openStream(), StandardCharsets.UTF_8));
-        return new JSONObject(readAll(bufferedReader));
     }
 
     public static JSONObject readJsonFromUrl(String url) throws IOException {
