@@ -1,4 +1,4 @@
-package mathax.legacy.installer.layouts;
+package mathax.installer.layouts;
 
 import java.awt.*; import java.util.*;
 

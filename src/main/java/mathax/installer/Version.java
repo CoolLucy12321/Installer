@@ -1,4 +1,4 @@
-package mathax.legacy.installer;
+package mathax.installer;
 
 import org.json.JSONObject;
 
@@ -42,7 +42,7 @@ public class Version {
 
     public static Version getLatest() {
         try {
-            return new Version(JSONUtils.readJsonFromUrl(Installer.API_URL + "Version/Legacy/Installer/metadata.json").getString("version"));
+            return new Version(JSONUtils.readJsonFromUrl(Installer.API_URL + "Version/Installer/metadata.json").getString("version"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }

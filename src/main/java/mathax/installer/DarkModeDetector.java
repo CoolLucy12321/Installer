@@ -1,4 +1,4 @@
-package mathax.legacy.installer;
+package mathax.installer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

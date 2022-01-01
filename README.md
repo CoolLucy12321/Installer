@@ -3,20 +3,20 @@
 </div>
 
 <h1 align="center">
-  MatHax Legacy Installer
+  MatHax Installer
 </h1>
 
 <p align="center">
-    Installer for MatHax Legacy
+    Installer for MatHax
 </p>
 
 <div align="center">
     <a href="https://mathaxclient.xyz/Discord"><img src="https://img.shields.io/discord/823286525402939402?logo=discord" alt="Discord"/></a>
     <br><br>
-    <img src="https://img.shields.io/github/last-commit/MatHax/Legacy-Installer" alt="GitHub last commit"/>
-    <img src="https://img.shields.io/github/commit-activity/w/MatHax/Legacy-Installer" alt="GitHub commit activity"/>
+    <img src="https://img.shields.io/github/last-commit/MatHax/Installer" alt="GitHub last commit"/>
+    <img src="https://img.shields.io/github/commit-activity/w/MatHax/Installer" alt="GitHub commit activity"/>
     <br>
-    <img src="https://img.shields.io/github/languages/code-size/MatHax/Legacy-Installer" alt="GitHub code size in bytes"/>
-    <img src="https://tokei.rs/b1/github/MatHax/Legacy-Installer" alt="GitHub lines of code"/>
-    <img src="https://img.shields.io/github/contributors/MatHax/Legacy-Installer" alt="GitHub contributors"/>
+    <img src="https://img.shields.io/github/languages/code-size/MatHax/Installer" alt="GitHub code size in bytes"/>
+    <img src="https://tokei.rs/b1/github/MatHax/Installer" alt="GitHub lines of code"/>
+    <img src="https://img.shields.io/github/contributors/MatHax/Installer" alt="GitHub contributors"/>
 </div>

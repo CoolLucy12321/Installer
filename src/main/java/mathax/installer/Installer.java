@@ -1,8 +1,8 @@
-package mathax.legacy.installer;
+package mathax.installer;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import mathax.legacy.installer.layouts.VerticalLayout;
+import mathax.installer.layouts.VerticalLayout;
 import net.fabricmc.installer.Main;
 import net.fabricmc.installer.util.MetaHandler;
 import net.fabricmc.installer.util.Reference;
@@ -79,12 +79,12 @@ public class Installer {
         if (latest == null) newerFound = false;
         else newerFound = latest.isHigherThan(INSTALLER_VERSION);
         if (newerFound) {
-            System.out.println("There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!");
-            JOptionPane.showMessageDialog(null, "There is a new version of MatHax Legacy Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!", "Newer MatHax Legacy Installer found!", JOptionPane.ERROR_MESSAGE);
+            System.out.println("There is a new version of MatHax Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!");
+            JOptionPane.showMessageDialog(null, "There is a new version of MatHax Installer, v" + Version.getLatest() + "! You are using v" + INSTALLER_VERSION + "!", "Newer MatHax Installer found!", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        INSTALLER_META = new InstallerMeta(API_URL + "Version/Legacy/Installer/metadata.json");
+        INSTALLER_META = new InstallerMeta(API_URL + "Version/Installer/metadata.json");
         try {
             INSTALLER_META.load();
         } catch (IOException e) {
@@ -95,19 +95,19 @@ public class Installer {
         } catch (JSONException e) {
             System.out.println("Failed to fetch installer metadata from the server!");
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Installer metadata parsing failed, please contact the MatHax Legacy support team via Discord! \nError: " + e, "Metadata parsing failed!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Installer metadata parsing failed, please contact the MatHax support team via Discord! \nError: " + e, "Metadata parsing failed!", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         CLIENT_VERSIONS = INSTALLER_META.getClientVersions();
         GAME_VERSIONS = INSTALLER_META.getGameVersions();
 
-        JFrame frame = new JFrame("MatHax Legacy Installer - v" + INSTALLER_VERSION);
+        JFrame frame = new JFrame("MatHax Installer - v" + INSTALLER_VERSION);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 5, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 4);
         frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathaxlegacy/textures/icons/icon.png"))).getImage());
+        frame.setIconImage(new ImageIcon(Objects.requireNonNull(Utils.class.getClassLoader().getResource("assets/mathax/textures/icons/icon.png"))).getImage());
 
         JPanel topPanel = new JPanel(new VerticalLayout());
 
@@ -210,8 +210,8 @@ public class Installer {
             progressBar.setValue(0);
             setInteractionEnabled(false);
 
-            String jarName = "MatHax_Legacy-v" + selectedClientVersion + "-Fabric_" + selectedGameVersion + ".jar";
-            String downloadURL = "https://api.mathaxclient.xyz/Download/Legacy/" + selectedGameVersion.replace(".", "-") + "/" + jarName;
+            String jarName = "MatHax-v" + selectedClientVersion + "-Fabric_" + selectedGameVersion + ".jar";
+            String downloadURL = "https://api.mathaxclient.xyz/Download/" + selectedGameVersion.replace(".", "-") + "/" + jarName;
 
             File saveLocation = getStorageDirectory().resolve(jarName).toFile();
 
@@ -246,27 +246,27 @@ public class Installer {
                         boolean isEmpty = modsFolderContents.length == 0;
 
                         if (modsFolder.exists() && modsFolder.isDirectory() && !isEmpty) {
-                            boolean failedToRemoveMatHaxLegacy = false;
-                            boolean shownMatHaxLegacyDialog = false;
+                            boolean failedToRemoveMatHax = false;
+                            boolean shownMatHaxDialog = false;
 
                             for (File mod : modsFolderContents) {
                                 String modName = mod.getName().toLowerCase();
-                                if (!shownMatHaxLegacyDialog && !modName.contains("installer") && (modName.contains("mathax") || modName.contains("mathax_legacy"))) {
-                                    int result = JOptionPane.showOptionDialog(frame, "Another installation of MatHax Legacy was found in your mods folder. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed MatHax Legacy Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+                                if (!shownMatHaxDialog && !modName.contains("installer") && (modName.contains("mathax"))) {
+                                    int result = JOptionPane.showOptionDialog(frame, "Another installation of MatHax was found in your mods folder. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed MatHax Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
-                                    shownMatHaxLegacyDialog = true;
+                                    shownMatHaxDialog = true;
                                     if (result != JOptionPane.YES_OPTION) {
                                         cancelled = true;
                                         break;
                                     }
 
-                                    if (!mod.delete()) failedToRemoveMatHaxLegacy = true;
+                                    if (!mod.delete()) failedToRemoveMatHax = true;
                                 }
                             }
 
-                            if (failedToRemoveMatHaxLegacy) {
-                                System.out.println("Failed to remove MatHax Legacy from mods folder to update them!");
-                                JOptionPane.showMessageDialog(frame, "Failed to remove MatHax Legacy from your mods folder to update them, please make sure your game is closed and try again!", "Failed to prepare MatHax Legacy for update", JOptionPane.ERROR_MESSAGE);
+                            if (failedToRemoveMatHax) {
+                                System.out.println("Failed to remove MatHax from mods folder to update them!");
+                                JOptionPane.showMessageDialog(frame, "Failed to remove MatHax from your mods folder to update them, please make sure your game is closed and try again!", "Failed to prepare MatHax for update", JOptionPane.ERROR_MESSAGE);
                                 cancelled = true;
                             }
                         }
@@ -279,7 +279,7 @@ public class Installer {
                                 String modName = mod.getName().toLowerCase();
                                 if (modName.contains("optifine") || modName.contains("optifabric")) {
                                     if (!shownOptifineDialog) {
-                                        int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax Legacy. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
+                                        int result = JOptionPane.showOptionDialog(frame,"Optifine was found in your mods folder, but Optifine is incompatible with MatHax. Do you want to remove it, or cancel the installation? \n\nFile Name: " + mod.getName(), "Installed Optifine Detected", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Yes", "Cancel"}, "Yes");
 
                                         shownOptifineDialog = true;
                                         if (result != JOptionPane.YES_OPTION) {
@@ -399,8 +399,8 @@ public class Installer {
 
     public String getStorageDirectoryName() {
         String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("mac")) return "mathax-legacy-installer";
-        else return ".mathax-legacy-installer";
+        if (os.contains("mac")) return "mathax-installer";
+        else return ".mathax-installer";
     }
 
     public Path getDefaultInstallDir() {
