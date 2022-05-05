@@ -11,7 +11,7 @@ if [ "$JV" != 8 ]; then
 		echo "installing sdkman..."
 		curl -s "https://get.sdkman.io" | bash
 		source ~/.sdkman/bin/sdkman-init.sh
-		sdk install java 8.0.222-open
+		sdk list java
 		;;
 	use)
 		echo "must source ~/.sdkman/bin/sdkman-init.sh"
