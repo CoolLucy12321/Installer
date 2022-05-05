@@ -12,8 +12,15 @@ version = project.installer_version
 group = project.maven_group
 
 repositories {
+    // Fabric
     maven {
         url "https://maven.fabricmc.net"
+    }
+
+    // GitHub
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
     }
 
     mavenCentral()
