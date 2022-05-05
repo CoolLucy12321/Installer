@@ -11,19 +11,21 @@ archivesBaseName = project.archives_base_name
 version = project.installer_version
 group = project.maven_group
 
-repositories {
-    // Fabric
-    maven {
-        url "https://maven.fabricmc.net"
-    }
+allprojects {
+    repositories {
+        // Fabric
+        maven {
+            url "https://maven.fabricmc.net"
+        }
 
-    // GitHub
-    maven {
-        url "https://jitpack.io"
-    }
+        // GitHub
+        maven {
+            url "https://jitpack.io"
+        }
 
-    mavenCentral()
-    mavenLocal()
+        mavenCentral()
+        mavenLocal()
+    }
 }
 
 dependencies {
